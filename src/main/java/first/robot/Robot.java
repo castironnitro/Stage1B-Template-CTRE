@@ -5,7 +5,11 @@
  */
 package first.robot;
 
+import org.wpilib.command3.Scheduler;
 import org.wpilib.framework.OpModeRobot;
+
+import first.robot.mechanisms.Feeder;
+import first.robot.mechanisms.IntakeLaucher;
 
 /**
  * The methods in this class are called automatically as described in the OpModeRobot documentation.
@@ -20,8 +24,17 @@ public class Robot extends OpModeRobot {
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
+
+  public final Feeder feeder = new Feeder();
+  public final IntakeLaucher intakeLaucher = new IntakeLaucher();
+
+
   public Robot() {}
 
   @Override
-  public void simulationPeriodic() {}
+  public void simulationPeriodic() {
+    intakeLaucher.periodic();
+    feeder.periodic();
+    Scheduler.getDefault().run();
+  }
 }
